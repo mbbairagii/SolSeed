@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import type { Wallet } from "@/types/wallet";
-import { connection } from "@/lib/solana";
-
 
 interface WalletCardProps {
     wallet: Wallet;
@@ -12,48 +10,54 @@ interface WalletCardProps {
 }
 
 export default function WalletCard({ wallet, index }: WalletCardProps) {
-    const [balance, setBalance] = useState<number | null>(null);
+    const [solBalance, setSolBalance] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
     const [showPrivateKey, setShowPrivateKey] = useState(false);
-    
+    const [error, setError] = useState<string | null>(null);
 
     const fetchBalance = async () => {
         setLoading(true);
+        setError(null);
+
         try {
-            
+            const connection = new Connection("https://rpc.ankr.com/solana", "confirmed");
             const publicKey = new PublicKey(wallet.publicKey);
 
             const balanceInLamports = await connection.getBalance(publicKey);
-            setBalance(balanceInLamports / LAMPORTS_PER_SOL);
+            setSolBalance(balanceInLamports / LAMPORTS_PER_SOL);
         } catch {
-            // silently fail (RPC hiccup / rate limit)
-            setBalance(null);
+            setSolBalance(0);
+            setError(null);
         } finally {
             setLoading(false);
         }
+
     };
 
-
     useEffect(() => {
-        fetchBalance();
+        const timeout = setTimeout(() => {
+            fetchBalance();
+        }, index * 400); // small stagger to avoid RPC spam
+
+        return () => clearTimeout(timeout);
     }, [wallet.publicKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const togglePrivateKey = () => {
         setShowPrivateKey(!showPrivateKey);
     };
 
-    const copyToClipboard = async (text: string, type: string) => {
+    const copyToClipboard = async (text: string) => {
         await navigator.clipboard.writeText(text);
     };
 
     return (
         <div
             className="
-        bg-[var(--bg-secondary)] 
-        border border-[var(--border)] 
-        rounded-lg 
-        p-8 
-        transition-all 
+        bg-[var(--bg-secondary)]
+        border border-[var(--border)]
+        rounded-lg
+        p-8
+        transition-all
         duration-300
         hover:border-[var(--accent)]
         hover:translate-x-1
@@ -61,6 +65,7 @@ export default function WalletCard({ wallet, index }: WalletCardProps) {
       "
             style={{ animationDelay: `${index * 0.1}s` }}
         >
+            {/* Header */}
             <div className="flex justify-between items-center mb-6">
                 <div className="font-mono text-sm text-[var(--text-secondary)] uppercase tracking-widest">
                     Wallet {index + 1}
@@ -69,15 +74,15 @@ export default function WalletCard({ wallet, index }: WalletCardProps) {
                     onClick={fetchBalance}
                     disabled={loading}
                     className="
-            bg-transparent 
-            border border-[var(--border)] 
+            bg-transparent
+            border border-[var(--border)]
             text-[var(--text-primary)]
-            px-4 py-2 
-            font-mono 
+            px-4 py-2
+            font-mono
             text-xs
-            rounded 
-            cursor-pointer 
-            transition-all 
+            rounded
+            cursor-pointer
+            transition-all
             duration-300
             hover:border-[var(--accent)]
             hover:text-[var(--accent)]
@@ -85,7 +90,7 @@ export default function WalletCard({ wallet, index }: WalletCardProps) {
             disabled:cursor-not-allowed
           "
                 >
-                    {loading ? "Loading..." : "Refresh Balance"}
+                    {loading ? "Loading..." : "🔄 Refresh"}
                 </button>
             </div>
 
@@ -94,22 +99,24 @@ export default function WalletCard({ wallet, index }: WalletCardProps) {
                 <label className="text-xs text-[var(--text-secondary)] uppercase tracking-wider mb-2 block">
                     Public Key
                 </label>
-                <div className="
-          font-mono 
-          text-sm
-          p-4 
-          bg-[var(--bg-primary)] 
-          border border-[var(--border)] 
-          rounded 
-          break-all
-          flex
-          justify-between
-          items-start
-          gap-2
-        ">
+                <div
+                    className="
+            font-mono
+            text-sm
+            p-4
+            bg-[var(--bg-primary)]
+            border border-[var(--border)]
+            rounded
+            break-all
+            flex
+            justify-between
+            items-start
+            gap-2
+          "
+                >
                     <span className="flex-1">{wallet.publicKey}</span>
                     <button
-                        onClick={() => copyToClipboard(wallet.publicKey, "Public Key")}
+                        onClick={() => copyToClipboard(wallet.publicKey)}
                         className="
               text-[var(--text-secondary)]
               hover:text-[var(--accent)]
@@ -128,21 +135,25 @@ export default function WalletCard({ wallet, index }: WalletCardProps) {
                 <label className="text-xs text-[var(--text-secondary)] uppercase tracking-wider mb-2 block">
                     Private Key
                 </label>
-                <div className="
-          font-mono 
-          text-sm
-          p-4 
-          bg-[var(--bg-primary)] 
-          border border-[var(--border)] 
-          rounded 
-          break-all
-          flex
-          justify-between
-          items-start
-          gap-2
-        ">
+                <div
+                    className="
+            font-mono
+            text-sm
+            p-4
+            bg-[var(--bg-primary)]
+            border border-[var(--border)]
+            rounded
+            break-all
+            flex
+            justify-between
+            items-start
+            gap-2
+          "
+                >
                     <span className={`flex-1 ${showPrivateKey ? "" : "blur-md select-none"}`}>
-                        {showPrivateKey ? wallet.privateKey : "••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"}
+                        {showPrivateKey
+                            ? wallet.privateKey
+                            : "••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"}
                     </span>
                     <div className="flex gap-2 flex-shrink-0">
                         <button
@@ -158,7 +169,7 @@ export default function WalletCard({ wallet, index }: WalletCardProps) {
                         </button>
                         {showPrivateKey && (
                             <button
-                                onClick={() => copyToClipboard(wallet.privateKey, "Private Key")}
+                                onClick={() => copyToClipboard(wallet.privateKey)}
                                 className="
                   text-[var(--text-secondary)]
                   hover:text-[var(--accent)]
@@ -173,16 +184,26 @@ export default function WalletCard({ wallet, index }: WalletCardProps) {
                 </div>
             </div>
 
-            {/* Balance */}
+            {/* Error */}
+            {error && (
+                <div className="mb-4 p-4 bg-red-500/10 border border-red-500/30 rounded text-sm text-red-400">
+                    {error}
+                </div>
+            )}
+
+            {/* SOL Balance */}
             <div className="flex justify-between items-center pt-4 border-t border-[var(--border)]">
-                <span className="text-[var(--text-secondary)] text-sm">Balance</span>
+                <div className="flex items-center gap-2">
+                    <span className="text-2xl">◎</span>
+                    <span className="text-[var(--text-secondary)] text-sm">SOL Balance</span>
+                </div>
                 <span className="font-mono text-2xl font-medium text-[var(--accent)]">
                     {loading ? (
-                        <span className="text-[var(--text-secondary)] text-base">Loading...</span>
-                    ) : balance !== null ? (
-                        `${balance.toFixed(4)} SOL`
+                        <span className="text-[var(--text-secondary)] text-base">...</span>
+                    ) : solBalance !== null ? (
+                        solBalance.toFixed(4)
                     ) : (
-                        <span className="text-[var(--text-secondary)] text-base">0.0000 SOL</span>
+                        <span className="text-[var(--text-secondary)] text-base">—</span>
                     )}
                 </span>
             </div>
