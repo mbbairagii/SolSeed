@@ -6,7 +6,7 @@ export default function Footer() {
             <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center">
                     <p className="text-sm text-[var(--text-secondary)] font-mono">
-                        Designed and developed{" "}
+                        Designed and developed by {" "}
                         <span className="text-[var(--accent)] font-medium">Kira</span>
                     </p>
                     <p className="text-xs text-[var(--text-secondary)] mt-2">
