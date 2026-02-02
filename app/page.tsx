@@ -33,7 +33,7 @@ export default function Home() {
   const handleAddWallet = (wallet: Wallet) => {
     setWallets((prev) => {
       if (prev.some(w => w.publicKey === wallet.publicKey)) {
-        return prev; // silently ignore duplicates
+        return prev;
       }
       return [...prev, wallet];
     });
@@ -49,7 +49,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden flex flex-col">
 
-      {/* Background image - only visible in dark mode */}
+      
       <div
         className="
           absolute inset-0
@@ -63,13 +63,13 @@ export default function Home() {
         "
       />
 
-      {/* Dark overlay for dark mode only */}
+      
       <div className="absolute inset-0 bg-black/50 dark:block light:hidden" />
 
-      {/* Light mode gradient background */}
+      
       <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:hidden" />
 
-      {/* Main content */}
+      
       <div className="relative z-10 flex-1">
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Header />
@@ -104,7 +104,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer */}
+      
       <Footer />
 
     </div>
