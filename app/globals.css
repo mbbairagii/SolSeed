@@ -7,21 +7,21 @@
 :root {
   --font-spectral: 'Spectral', serif;
   --font-jetbrains: 'JetBrains Mono', monospace;
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #141414;
-  --text-primary: #ffffff;
-  --text-secondary: #888888;
-  --accent: #00ff88;
-  --border: rgba(255, 255, 255, 0.1);
-}
-
-.light {
   --bg-primary: #fafafa;
   --bg-secondary: #ffffff;
   --text-primary: #0a0a0a;
   --text-secondary: #666666;
   --accent: #00cc66;
   --border: rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #141414;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --accent: #00ff88;
+  --border: rgba(255, 255, 255, 0.1);
 }
 
 * {

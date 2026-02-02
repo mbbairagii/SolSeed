@@ -46,23 +46,27 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen bg-black overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden">
 
-      {/* 🔥 Glowy background image */}
+      {/* Background image - only visible in dark mode */}
       <div
         className="
-        absolute inset-0
-        bg-[url('/xxx.png')]
-        bg-center bg-no-repeat bg-cover
-        opacity-25
-        
-        scale-110
-        pointer-events-none
-      "
+          absolute inset-0
+          bg-[url('/xxx.png')]
+          bg-center bg-no-repeat bg-cover
+          opacity-25
+          scale-110
+          pointer-events-none
+          dark:block
+          light:hidden
+        "
       />
 
-      {/* Dark overlay to keep text readable */}
-      <div className="absolute inset-0 bg-black/50" />
+      {/* Dark overlay for dark mode only */}
+      <div className="absolute inset-0 bg-black/50 dark:block light:hidden" />
+
+      {/* Light mode gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:hidden" />
 
       {/* Main content */}
       <div className="relative z-10 container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
