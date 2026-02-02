@@ -1,26 +1,136 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;600&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-spectral: 'Spectral', serif;
+  --font-jetbrains: 'JetBrains Mono', monospace;
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #141414;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --accent: #00ff88;
+  --border: rgba(255, 255, 255, 0.1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.light {
+  --bg-primary: #fafafa;
+  --bg-secondary: #ffffff;
+  --text-primary: #0a0a0a;
+  --text-secondary: #666666;
+  --accent: #00cc66;
+  --border: rgba(0, 0, 0, 0.1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-spectral);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Grain effect */
+.grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.03;
+  z-index: 100;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+  opacity: 0.8;
+}
+
+/* Selection */
+::selection {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+/* Focus visible */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Animation delays for seed words */
+.seed-word:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.seed-word:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.seed-word:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.seed-word:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.seed-word:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.seed-word:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.seed-word:nth-child(7) {
+  animation-delay: 0.35s;
+}
+
+.seed-word:nth-child(8) {
+  animation-delay: 0.4s;
+}
+
+.seed-word:nth-child(9) {
+  animation-delay: 0.45s;
+}
+
+.seed-word:nth-child(10) {
+  animation-delay: 0.5s;
+}
+
+.seed-word:nth-child(11) {
+  animation-delay: 0.55s;
+}
+
+.seed-word:nth-child(12) {
+  animation-delay: 0.6s;
 }
