@@ -4,12 +4,12 @@ A clean client-side Solana wallet generator with seed phrase generation, multipl
 
 ## Features
 
-- 🔐 Generate secure 12-word seed phrases
-- 💼 Create multiple Solana wallets from one seed
-- 💰 Check real-time SOL balance
-- 🌓 Dark/Light theme toggle
-- 🎨 Elite typography and animations
-- 🔒 100% client-side - no servers, no storage
+- Generate secure 12-word seed phrases
+- Create multiple Solana wallets from one seed
+- Check real-time SOL balance
+- Dark/Light theme toggle
+- Elite typography and animations
+- 100% client-side - no servers, no storage
 
 ## Tech Stack
 
