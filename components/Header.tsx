@@ -10,14 +10,26 @@ export default function Header() {
         const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
         const initialTheme = savedTheme || "dark";
         setTheme(initialTheme);
-        document.documentElement.classList.toggle("light", initialTheme === "light");
+
+        // Use 'dark' class instead of 'light' class
+        if (initialTheme === "dark") {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
     }, []);
 
     const toggleTheme = () => {
         const newTheme = theme === "dark" ? "light" : "dark";
         setTheme(newTheme);
         localStorage.setItem("theme", newTheme);
-        document.documentElement.classList.toggle("light", newTheme === "light");
+
+        // Use 'dark' class instead of 'light' class
+        if (newTheme === "dark") {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
     };
 
     return (
