@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import SeedInput from "@/components/SeedInput";
 import SeedPhrase from "@/components/SeedPhrase";
 import WalletsList from "@/components/WalletList";
+import Footer from "@/components/Footer";
 import { generateMnemonic, validateMnemonic } from "@/lib/wallet";
 import type { Wallet } from "@/types/wallet";
 
@@ -46,7 +47,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden flex flex-col">
 
       {/* Background image - only visible in dark mode */}
       <div
@@ -69,37 +70,42 @@ export default function Home() {
       <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:hidden" />
 
       {/* Main content */}
-      <div className="relative z-10 container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Header />
+      <div className="relative z-10 flex-1">
+        <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Header />
 
-        {!mnemonic ? (
-          <>
-            <Hero onGenerate={handleGenerateWallet} />
-            <SeedInput onImport={handleImportWallet} />
-          </>
-        ) : (
-          <>
-            <div className="mb-8 animate-fadeIn">
-              <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-6">
-                <p className="text-sm leading-relaxed">
-                  <strong className="text-yellow-500 font-semibold">⚠️ Security Warning:</strong>{" "}
-                  This seed phrase gives complete access to your wallets. Write it down and store it
-                  securely offline. Never share it with anyone. If you lose it, you lose access to
-                  your funds forever.
-                </p>
+          {!mnemonic ? (
+            <>
+              <Hero onGenerate={handleGenerateWallet} />
+              <SeedInput onImport={handleImportWallet} />
+            </>
+          ) : (
+            <>
+              <div className="mb-8 animate-fadeIn">
+                <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-6">
+                  <p className="text-sm leading-relaxed">
+                    <strong className="text-yellow-500 font-semibold">⚠️ Security Warning:</strong>{" "}
+                    This seed phrase gives complete access to your wallets. Write it down and store it
+                    securely offline. Never share it with anyone. If you lose it, you lose access to
+                    your funds forever.
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <SeedPhrase mnemonic={mnemonic} onReset={handleReset} />
+              <SeedPhrase mnemonic={mnemonic} onReset={handleReset} />
 
-            <WalletsList
-              mnemonic={mnemonic}
-              wallets={wallets}
-              onAddWallet={handleAddWallet}
-            />
-          </>
-        )}
+              <WalletsList
+                mnemonic={mnemonic}
+                wallets={wallets}
+                onAddWallet={handleAddWallet}
+              />
+            </>
+          )}
+        </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
 
     </div>
   );
