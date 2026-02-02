@@ -24,19 +24,21 @@ A clean client-side Solana wallet generator with seed phrase generation, multipl
 ```
 solseed-wallet/
 ├── app/
-│   ├── globals.css          # Global styles and theme
-│   ├── layout.tsx           # Root layout
-│   └── page.tsx             # Main page
+│   ├── globals.css          
+│   ├── layout.tsx           
+│   └── page.tsx             
 ├── components/
-│   ├── Header.tsx           # Header with theme toggle
-│   ├── Hero.tsx             # Hero section
-│   ├── SeedPhrase.tsx       # Seed phrase display
-│   ├── WalletCard.tsx       # Individual wallet card
-│   └── WalletsList.tsx      # Wallets container
+│   ├── Header.tsx           
+│   ├── Hero.tsx             
+│   ├── SeedPhrase.tsx       
+│   ├── WalletCard.tsx       
+│   └── WalletsList.tsx
+|   └── WalletStats.tsx
+|   └── Footer.tsx
 ├── lib/
-│   └── wallet.ts            # Wallet generation utilities
+│   └── wallet.ts            
 ├── types/
-│   └── wallet.ts            # TypeScript types
+│   └── wallet.ts            
 ├── package.json
 ├── tailwind.config.ts
 ├── tsconfig.json
