@@ -7,7 +7,7 @@ export default function Footer() {
                 <div className="text-center">
                     <p className="text-sm text-[var(--text-primary)] font-mono">
                         Designed and developed by{" "}
-                        <span className="text-[var(--accent)] font-medium">Kira</span>
+                        <span className="text-[var(--accent)] font-medium">Mohini</span>
                     </p>
                     <p className="text-xs text-[var(--text-secondary)] mt-2">
                         © {new Date().getFullYear()} SolSeed. All rights reserved.
