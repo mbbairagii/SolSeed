@@ -53,4 +53,4 @@ solseed-wallet/
 - Use hardware wallets for significant amounts
 - Verify the source code before use
 
-Designed and Developed by Kira
+Designed and Developed by Mohini
